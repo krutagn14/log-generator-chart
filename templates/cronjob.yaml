@@ -9,14 +9,14 @@ spec:
       template:
         spec:
           containers:
-            - name: {{ .Release.Name }}-cron
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-              command:
-                - sh
-                - -c
-                - |
-                  while true; do
-                    echo "{{ .Values.config.LOG_MESSAGE }}"
-                    sleep 60
-                  done
+          - name: {{ .Release.Name }}-cron
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            command:
+            - sh
+            - -c
+            - |
+              while true; do
+                echo "{{ .Values.config.LOG_MESSAGE }}"
+                sleep 60
+              done
           restartPolicy: OnFailure
