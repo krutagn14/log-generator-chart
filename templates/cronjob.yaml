@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: log-generator-cron
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: log-generator
+            image: krutagn14/log_gen:latest
+            volumeMounts:
+            - name: log-config-volume
+              mountPath: /config
+          volumes:
+          - name: log-config-volume
+            configMap:
+              name: log-config
+          restartPolicy: OnFailure
+
