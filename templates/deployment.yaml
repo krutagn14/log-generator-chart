@@ -1,30 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: log-generator
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: log-generator
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: log-generator
     spec:
       containers:
-      - name: {{ .Release.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        envFrom:
-        - configMapRef:
-            name: {{ .Release.Name }}-config
-        command:
-          - sh
-          - -c
-          - |
-            while true; do
-              echo "$LOG_MESSAGE"
-              sleep 60
-            done
-      restartPolicy: Always
+      - name: log-generator
+        image: krutagn14/log_gen:latest
+        volumeMounts:
+        - name: log-config-volume
+          mountPath: /config
+      volumes:
+      - name: log-config-volume
+        configMap:
+          name: log-config
+
