@@ -8,7 +8,17 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: OnFailure
           containers:
           - name: {{ .Release.Name }}-cron
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          restartPolicy: OnFailure
+            command: ["/bin/sh", "-c"]
+            args:
+              - cat /config/LOG_MESSAGE; sleep 30
+            volumeMounts:
+            - name: log-config-volume
+              mountPath: /config
+          volumes:
+          - name: log-config-volume
+            configMap:
+              name: {{ .Release.Name }}-config
