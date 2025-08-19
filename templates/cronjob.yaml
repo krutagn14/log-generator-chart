@@ -1,22 +1,14 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: log-generator-cron
+  name: {{ .Release.Name }}-cron
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "{{ .Values.cronjob.schedule }}"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: log-generator
-            image: krutagn14/log_gen:latest
-            volumeMounts:
-            - name: log-config-volume
-              mountPath: /config
-          volumes:
-          - name: log-config-volume
-            configMap:
-              name: log-config
+          - name: {{ .Release.Name }}-cron
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           restartPolicy: OnFailure
-
