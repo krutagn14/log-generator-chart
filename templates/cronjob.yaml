@@ -11,4 +11,5 @@ spec:
           containers:
           - name: {{ .Release.Name }}-cron
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
           restartPolicy: OnFailure
