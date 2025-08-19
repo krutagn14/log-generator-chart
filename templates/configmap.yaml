@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-config
 data:
-  LOG_MESSAGE: {{ .Values.config.LOG_MESSAGE }}
+  LOG_MESSAGE: |
+{{ .Values.config.LOG_MESSAGE | indent 4 }}
