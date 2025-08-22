@@ -3,20 +3,20 @@ kind: CronJob
 metadata:
   name: {{ .Release.Name }}-cron
 spec:
-  schedule: "{{ .Values.cronjob.schedule }}"
+  schedule: {{ .Values.cronjob.schedule | quote }}
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: OnFailure
           containers:
-            - name: {{ .Release.Name }}-cron
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-              command:
-                - sh
-                - -c
-                - |
-                  while true; do
-                    echo "{{ .Values.config.LOG_MESSAGE }}"
-                    sleep 60
-                  done
+          - name: {{ .Release.Name }}-cron
+            image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+            command:
+              - sh
+              - -c
+              - |
+                while true; do
+                  echo "wrvw"
+                  sleep 60
+                done
