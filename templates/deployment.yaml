@@ -25,5 +25,5 @@ spec:
           - |
             while true; do
               echo "$LOG_MESSAGE"
-              sleep 60
+              sleep 1200
             done
