@@ -26,4 +26,4 @@ config:
     [N] test log 5
     test [n] log 5
 cronjob:
-  schedule: "*/20 * * * *"
+  schedule: "*/5 * * * *"
