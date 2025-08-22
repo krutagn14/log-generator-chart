@@ -12,11 +12,15 @@ spec:
           containers:
           - name: {{ .Release.Name }}-cron
             image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            envFrom: 
+            - configMapRef:
+                name: {{ .Release.Name }}-config
             command:
               - sh
               - -c
               - |
                 while true; do
-                  echo "wrvw"
+                  echo "$LOG_MESSAGE"
                   sleep 60
                 done

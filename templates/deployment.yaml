@@ -19,3 +19,11 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ .Release.Name }}-config
+        command:
+          - sh
+          - -c
+          - |
+            while true; do
+              echo "$LOG_MESSAGE"
+              sleep 60
+            done
